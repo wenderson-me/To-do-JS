@@ -33,13 +33,36 @@ class item {
         edit.innerHTML = "EDIT";
         edit.addEventListener('click', () => this.edit(input, name));
 
+        var remove = document.createElement('button');
+        remove.classList.add('remove');
+        remove.innerHTML = "REMOVE";
+        remove.addEventListener('click', () => this.remove(itemBox, name));
+
 
         container.appendChild(itemBox);
 
         itemBox.appendChild(input);
         itemBox.appendChild(edit);
+        itemBox.appendChild(remove);
     }
 
+    edit(input, name) {
+        if (input.disabled == true) {
+            input.disabled = !input.disabled;
+        } else {
+            input.disabled = !input.disabled;
+            let indexof = todos.indexOf(name);
+            todos[indexof] = input.value;
+            window.localStorage.setItem("todos", JSON.stringify(todos));
+        }
+    }
+
+    remove(itemBox, name) {
+        itemBox.parentNode.removeChild(itemBox);
+        let index = todos.indexOf(name);
+        todos.splice(index, 1);
+        window.localStorage.setItem("todos", JSON.stringify(todos));
+    }
 }
 
 add.addEventListener('click', check);
